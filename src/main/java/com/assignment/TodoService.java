@@ -2,6 +2,8 @@ package com.assignment;
 
 import com.assignment.CustomException.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,6 +33,7 @@ public class TodoService {
        return repo.findByTodoId(id);
     }
 
+    @Cacheable(value = "user_todos", key = "#userId")
     public List<Todo> getAllTodosByUserId(String userId){
         return repo.findAllTodosForUsers(userId);
     }
